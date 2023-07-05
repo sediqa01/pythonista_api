@@ -18,7 +18,7 @@ class ProfileList(APIView):
 """
  Get profile by ID (primary key)
  CRUD functionality 
- """
+"""
 class ProfileDetail(APIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
