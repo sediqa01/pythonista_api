@@ -27,10 +27,10 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.owner}'s profile"
 
-  """Creates a profile whenever a new user is created"""
+  
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
-
+"""Creates a profile whenever a new user is created"""
 
 post_save.connect(create_profile, sender=User)
