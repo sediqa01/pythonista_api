@@ -15,3 +15,12 @@ class ConversationList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class ConversationDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve a Conversation, or update or delete it by id if you own it.
+    """
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = ConversationDetailSerializer
+    queryset = Conversation.objects.all()
