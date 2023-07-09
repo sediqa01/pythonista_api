@@ -15,8 +15,7 @@ class JoinSerializer(serializers.ModelSerializer):
             'id', 'owner', 'event', 'created_at'
         ]
 
-
-        def create(self, validated_data):
+    def create(self, validated_data):
         """
         Validation to stop a user to Join the same event twice
         """

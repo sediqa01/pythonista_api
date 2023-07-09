@@ -27,5 +27,6 @@ urlpatterns = [
     path('', include('followers.urls')),
     path('', include('events.urls')),
     path('', include('conversations.urls')),
+    path('', include('joins.urls')),
 ]
  
