@@ -1,9 +1,8 @@
 from rest_framework import serializers
 from .models import Event
-from django.utils.dateformat import format
 
 
-class EventSerializer(TaggitSerializer, serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     """
     Serializer for the Event model
     """
@@ -21,7 +20,7 @@ class EventSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            'id', 'owner', 'title', 'description',
+            'id', 'owner', 'title', 'description', 'location',
             'starts_at', 'ends_at','created_at',
              'updated_at', 'image', 'event_date',
             'is_owner', 'profile_id','profile_image',

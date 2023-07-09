@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
+from django.utils import timezone
 
 
 class Event(models.Model):
@@ -13,8 +14,8 @@ class Event(models.Model):
     description = models.TextField(blank=True)
     location = models.TextField(blank=True)
     event_date = models.DateField(blank=False)
-    starts_at = models.DateTimeField(auto_now_add=True)
-    ends_at = models.DateTimeField(auto_now=True)
+    starts_at = models.TimeField(default=timezone.now)
+    ends_at = models.TimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(
