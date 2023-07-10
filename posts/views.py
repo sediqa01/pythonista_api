@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, filters
 from pythonista_api.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import PostSerializer
 from django.db.models import Count
 from .models import Post
@@ -19,11 +20,19 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
+        DjangoFilterBackend
     ]
     # for SearchFilter
     search_fields = [
         'owner__username',
         'content'
+    ]
+    # for DjangoFilterBackend
+    filterset_fields = [
+        # filter posts from followers
+        'owner__followed__owner__profile',
+        # filter user posts
+        'owner__profile'
     ]
     # for OrderingFilter
     ordering_fields = [
