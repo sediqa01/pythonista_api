@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from pythonista_api.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Conversation
 from .serializers import ConversationSerializer, ConversationDetailSerializer
 
@@ -12,6 +13,14 @@ class ConversationList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = ConversationSerializer
     queryset = Conversation.objects.all()
+
+    filter_backends = [
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        # get Conversation on each event
+        'event',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
