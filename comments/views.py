@@ -1,7 +1,8 @@
 from rest_framework import generics, permissions
 from pythonista_api.permissions import IsOwnerOrReadOnly
-from .models import Comment
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import CommentSerializer, CommentDetailSerializer
+from .models import Comment
 
 
 class CommentList(generics.ListCreateAPIView):
@@ -12,6 +13,14 @@ class CommentList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    
+    filter_backends = [
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        # get comments on each post
+        'post',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
