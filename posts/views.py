@@ -17,7 +17,13 @@ class PostList(generics.ListCreateAPIView):
     ).order_by('-created_at')
 
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    # for SearchFilter
+    search_fields = [
+        'owner__username',
+        'content'
     ]
     # for OrderingFilter
     ordering_fields = [
