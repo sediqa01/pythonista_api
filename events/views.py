@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from pythonista_api.permissions import IsOwnerOrReadOnly
 from .models import Event
 from django.db.models import Count
@@ -16,6 +16,17 @@ class EventList(generics.ListCreateAPIView):
         conversations_count=Count('conversation', distinct=True),
         joins_count=Count('joins', distinct=True),
     ).order_by('-created_at')
+
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+
+    ordering_fields = [
+        'conversations_count',
+        'joins_count',
+        'joins__created_at',
+        'event_date',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
