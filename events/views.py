@@ -18,7 +18,14 @@ class EventList(generics.ListCreateAPIView):
     ).order_by('-created_at')
 
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+
+    search_fields = [
+        'owner__username',
+        'title',
+        'event_date',
     ]
 
     ordering_fields = [
