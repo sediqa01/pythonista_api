@@ -69,3 +69,13 @@ class EventDetailViewTests(APITestCase):
         event = Event.objects.filter(pk=1).first()
         self.assertEqual(event.title, 'updated title')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_update_someone_elses_event(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.put('/events/2/', {'title': 'an edited title'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_their_own_event(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/events/2/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
