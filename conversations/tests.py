@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
-from .models import Event
+from rest_framework.test import APITestCase
 from .models import Conversation
 from rest_framework import status
-from rest_framework.test import APITestCase
+from .models import Event
 
 
 class ConversationListViewTests(APITestCase):
@@ -40,3 +40,35 @@ class ConversationListViewTests(APITestCase):
             }
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class ConversationDetailViewTests(APITestCase):
+    def setUp(self):
+        pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(username='developer', password='django.rf')
+        event_first = Event.objects.create(
+            owner=pythonista, title='Pythonista Networking evening ', event_date='2023-07-23')
+        event_second = Event.objects.create(
+            owner=developer, title='Weekend Meetup', event_date='2023-07-25')
+        Conversation.objects.create(
+            owner=pythonista, event=event_first, content='love to join!!'
+        )
+        Conversation.objects.create(
+            owner=developer, event=event_second, content='I am not ganna join'
+        )
+
+    def test_logged_in_user_can_update_their_own_conversation(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.put(
+            '/conversations/1/', {'content': 'Informative'}
+        )
+        conversation = Conversation.objects.filter(pk=1).first()
+        self.assertEqual(conversation.content, 'Informative')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_can_not_update_others_conversations(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.put(
+            '/conversations/1/', {'content': 'updated content'}
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
