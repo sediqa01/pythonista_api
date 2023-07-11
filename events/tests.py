@@ -55,3 +55,7 @@ class EventDetailViewTests(APITestCase):
         response = self.client.get('/events/1/')
         self.assertEqual(response.data['title'], 'a title')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_retrieve_event_using_invalid_id(self):
+        response = self.client.get('/events/55/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
