@@ -72,3 +72,13 @@ class ConversationDetailViewTests(APITestCase):
             '/conversations/1/', {'content': 'updated content'}
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_their_own_conversation(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/conversations/2/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_cant_delete_someone_elses_conversation(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/conversations/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
