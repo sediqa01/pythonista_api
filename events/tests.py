@@ -59,3 +59,13 @@ class EventDetailViewTests(APITestCase):
     def test_user_cant_retrieve_event_using_invalid_id(self):
         response = self.client.get('/events/55/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_user_can_update_own_event(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.put(
+            '/events/1/', {'title': 'updated title', 'event_date': '2023-07-22',
+                 'starts_at': '06:00 AM', 'ends_at': '09:00AM'}
+        )
+        event = Event.objects.filter(pk=1).first()
+        self.assertEqual(event.title, 'updated title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
