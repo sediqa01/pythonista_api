@@ -32,3 +32,26 @@ class EventListViewTests(APITestCase):
         count = Event.objects.count()
         self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class EventDetailViewTests(APITestCase):
+    def setUp(self):
+        pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(username='developer', password='django.rf')
+        Event.objects.create(
+            owner=pythonista,
+            title='a title',
+            description='networking event',
+            event_date='2023-07-23'
+        )
+        Event.objects.create(
+            owner=developer,
+            title='new title',
+            description='coding event',
+            event_date='2023-07-22'
+        )
+
+    def test_can_retrieve_event_using_valid_id(self):
+        response = self.client.get('/events/1/')
+        self.assertEqual(response.data['title'], 'a title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
