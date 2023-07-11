@@ -5,6 +5,9 @@ from rest_framework.test import APITestCase
 
 
 class EventListViewTests(APITestCase):
+    """
+     Event list view Test
+    """
     def setUp(self):
         User.objects.create_user(username='pythonista', password='pp5.react')
 
@@ -35,6 +38,9 @@ class EventListViewTests(APITestCase):
 
 
 class EventDetailViewTests(APITestCase):
+    """
+     Event Detail view Test
+    """
     def setUp(self):
         pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
         developer = User.objects.create_user(username='developer', password='django.rf')

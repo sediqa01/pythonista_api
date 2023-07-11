@@ -6,6 +6,9 @@ from .models import Event
 
 
 class ConversationListViewTests(APITestCase):
+    """
+    Conversations List view Test
+    """
     def setUp(self):
         pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
         event_first = Event.objects.create(
@@ -43,6 +46,9 @@ class ConversationListViewTests(APITestCase):
 
 
 class ConversationDetailViewTests(APITestCase):
+    """
+     Conversations Detail view Test
+    """
     def setUp(self):
         pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
         developer = User.objects.create_user(username='developer', password='django.rf')
