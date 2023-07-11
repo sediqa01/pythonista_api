@@ -20,3 +20,15 @@ class EventListViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         count = Event.objects.count()
         self.assertEqual(count, 0)
+
+    def test_logged_in_user_can_create_event(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.post(
+            '/events/', {
+                'title': 'a title', 'event_date': '2023-07-22',
+                 'starts_at': '06:00 AM', 'ends_at': '09:00AM'
+                  }
+        )
+        count = Event.objects.count()
+        self.assertEqual(count, 1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
