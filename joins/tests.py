@@ -36,3 +36,41 @@ class JoinListViewTests(APITestCase):
             '/joins/', {'owner': user, 'event': 1}
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class JoinDetailViewTests(APITestCase):
+    """
+    Joins Detail view Test
+    """
+    def setUp(self):
+        pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(username='developer', password='django.rf')
+        event_first = Event.objects.create(
+            owner=pythonista, title='Pythonista Networking evening ', event_date='2023-07-23')
+        event_second = Event.objects.create(
+            owner=developer, title='Weekend Meetup', event_date='2023-07-25')
+        Join.objects.create(owner=pythonista, event=event_first)
+        Join.objects.create(owner=developer, event=event_second)
+
+    def test_can_not_join_to_the_same_event_twice(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        user = User.objects.get(username='pythonista')
+        event_first = Event.objects.get(id=1)
+        response = self.client.post(
+            '/joins/', {'owner': user, 'event': 1}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_logged_in_user_can_delete_own_join(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        user = User.objects.get(username='pythonista')
+        response = self.client.delete('/joins/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_logged_in_user_can_not_delete_others_join(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        user = User.objects.get(username='pythonista')
+        response = self.client.delete('/joins/2/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+  
