@@ -29,3 +29,33 @@ class PostListViewTests(APITestCase):
         response = self.client.post(
             '/posts/', {'content': 'pythonista post content'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class PostDetailViewTests(APITestCase):
+    """Post detail view tests cases"""
+
+    def setUp(self):
+        pythonista = User.objects.create_user(
+            username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(
+            username='developer', password='django.rf')
+        Post.objects.create(
+            owner=pythonista, content='first post'
+        )
+        Post.objects.create(
+            owner=developer, content='second post'
+        )
+
+    def test_user_can_update_own_post(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.put(
+            '/posts/2/', {'content': 'Updated post'})
+        post = Post.objects.filter(pk=2).first()
+        self.assertEqual(post.content, 'Updated post')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_can_not_update_other_user_post(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.put(
+            '/posts/2/', {'content': 'a new post'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

@@ -36,7 +36,7 @@ class ConversationListViewTests(APITestCase):
 
     def test_logged_in_user_can_add_conversation(self):
         self.client.login(username='pythonista', password='pp5.react')
-        event_first = Event.objects.get(id=1)
+        Event.objects.get(id=1)
         current_user = User.objects.get(username='pythonista')
         response = self.client.post(
             '/conversations/', {
