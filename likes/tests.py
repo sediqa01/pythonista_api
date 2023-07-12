@@ -37,3 +37,41 @@ class LikeListViewTests(APITestCase):
             '/likes/', {'owner': user, 'post': 1}
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class LikeDetailViewTests(APITestCase):
+    """
+    Like Detail view Test
+    """
+    def setUp(self):
+        pythonista = User.objects.create_user(
+            username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(
+            username='developer', password='django.rf')
+        post_first = Post.objects.create(
+            owner=pythonista, content='web congress')
+        post_second = Post.objects.create(
+            owner=developer, content='My first Meetup')
+        Like.objects.create(owner=pythonista, post=post_first)
+        Like.objects.create(owner=developer, post=post_second)
+
+    def test_logged_in_user_can_delete_own_likes(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        User.objects.get(username='pythonista')
+        response = self.client.delete('/likes/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_logged_in_user_can_not_delete_others_likes(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        User.objects.get(username='pythonista')
+        response = self.client.delete('/likes/2/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_can_not_like_the_same_post_twice(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        user = User.objects.get(username='pythonista')
+        Post.objects.get(id=1)
+        response = self.client.post(
+            '/likes/', {'owner': user, 'post': 1}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
