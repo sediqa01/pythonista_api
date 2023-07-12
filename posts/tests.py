@@ -59,3 +59,13 @@ class PostDetailViewTests(APITestCase):
         response = self.client.put(
             '/posts/2/', {'content': 'a new post'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_their_own_post(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/posts/2/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_cant_delete_someone_elses_post(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/posts/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
