@@ -19,7 +19,6 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_profile_re4vqr', blank=True
     )
-    
 
     class Meta:
         ordering = ['-created_at']
@@ -27,10 +26,11 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.owner}'s profile"
 
-  
+
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
-"""Creates a profile whenever a new user is created"""
 
+
+"""Creates a profile whenever a new user is created"""
 post_save.connect(create_profile, sender=User)
