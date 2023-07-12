@@ -32,8 +32,9 @@ class PostListViewTests(APITestCase):
 
 
 class PostDetailViewTests(APITestCase):
-    """Post detail view tests cases"""
-
+    """
+    Post detail view tests
+    """
     def setUp(self):
         pythonista = User.objects.create_user(
             username='pythonista', password='pp5.react')

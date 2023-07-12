@@ -12,7 +12,7 @@ class ConversationListViewTests(APITestCase):
     def setUp(self):
         pythonista = User.objects.create_user(
             username='pythonista', password='pp5.react')
-        event_first = Event.objects.create(
+        Event.objects.create(
             owner=pythonista, title='Coding Event', event_date='2023-07-23')
 
     def test_can_list_conversations(self):
