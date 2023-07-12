@@ -43,3 +43,50 @@ class CommentListViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         count = Comment.objects.count()
         self.assertEqual(count, 0)
+
+
+class CommentDetailViewTests(APITestCase):
+    """
+     Comment Detail view Test
+    """
+    def setUp(self):
+        pythonista = User.objects.create_user(
+            username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(
+            username='developer', password='django.rf')
+        post_first = Post.objects.create(
+            owner=pythonista, content='Pythonista Networking evening')
+        post_second = Post.objects.create(
+            owner=developer, content='Weekend Meetup')
+        Comment.objects.create(
+            owner=pythonista, post=post_first, content='love it!!'
+        )
+        Comment.objects.create(
+            owner=developer, post=post_second, content='Good one'
+        )
+
+    def test_logged_in_user_can_update_their_own_comment(self):
+        self.client.login(username='pythonista', password='pp5.react')
+        response = self.client.put(
+            '/comments/1/', {'content': 'Informative'}
+        )
+        comment = Comment.objects.filter(pk=1).first()
+        self.assertEqual(comment.content, 'Informative')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_can_not_update_others_comment(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.put(
+            '/comments/1/', {'content': 'updated content'}
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_their_own_comment(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/comments/2/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_cant_delete_someone_elses_comment(self):
+        self.client.login(username='developer', password='django.rf')
+        response = self.client.delete('/comments/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
