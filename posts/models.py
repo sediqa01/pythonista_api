@@ -28,10 +28,8 @@ class Post(models.Model):
         max_length=32, choices=image_filter_choices, default='Normal'
     )
 
-
     class Meta:
         ordering = ['-created_at']
-
 
     def __str__(self):
         return f'{self.id}'

@@ -29,4 +29,3 @@ urlpatterns = [
     path('', include('conversations.urls')),
     path('', include('joins.urls')),
 ]
- 

@@ -6,7 +6,6 @@ from django.db.models import Count
 from .models import Profile
 
 
-
 class ProfileList(generics.ListAPIView):
     """
     List all profiles.
@@ -37,7 +36,7 @@ class ProfileList(generics.ListAPIView):
         'owner__following__created_at',
         'owner__followed__created_at',
     ]
-    
+
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """

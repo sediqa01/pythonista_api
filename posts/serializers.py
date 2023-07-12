@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Post
 from likes.models import Like
-from comments.models import Comment
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -43,7 +42,6 @@ class PostSerializer(serializers.ModelSerializer):
             ).first()
             return like.id if like else None
         return None
-
 
     class Meta:
         model = Post

@@ -29,7 +29,7 @@ class EventListViewTests(APITestCase):
         response = self.client.post(
             '/events/', {
                 'title': 'a title', 'event_date': '2023-07-22',
-                 'starts_at': '06:00 AM', 'ends_at': '09:00AM'
+                'starts_at': '06:00 AM', 'ends_at': '09:00AM'
                   }
         )
         count = Event.objects.count()
@@ -42,8 +42,10 @@ class EventDetailViewTests(APITestCase):
      Event Detail view Test
     """
     def setUp(self):
-        pythonista = User.objects.create_user(username='pythonista', password='pp5.react')
-        developer = User.objects.create_user(username='developer', password='django.rf')
+        pythonista = User.objects.create_user(
+            username='pythonista', password='pp5.react')
+        developer = User.objects.create_user(
+            username='developer', password='django.rf')
         Event.objects.create(
             owner=pythonista,
             title='a title',
@@ -69,8 +71,9 @@ class EventDetailViewTests(APITestCase):
     def test_user_can_update_own_event(self):
         self.client.login(username='pythonista', password='pp5.react')
         response = self.client.put(
-            '/events/1/', {'title': 'updated title', 'event_date': '2023-07-22',
-                 'starts_at': '06:00 AM', 'ends_at': '09:00AM'}
+            '/events/1/', {
+                'title': 'updated title', 'event_date': '2023-07-22',
+                'starts_at': '06:00 AM', 'ends_at': '09:00AM'}
         )
         event = Event.objects.filter(pk=1).first()
         self.assertEqual(event.title, 'updated title')
