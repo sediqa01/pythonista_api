@@ -11,26 +11,25 @@ class CommentSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    created_on = serializers.SerializerMethodField()
-    updated_on = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
+    updated_at = serializers.SerializerMethodField()
 
-    def get_created_on(self, obj):
+    def get_created_at(self, obj):
         """Method to display when comment was posted"""
-        return naturaltime(obj.created_on)
+        return naturaltime(obj.created_at)
 
-    def get_updated_on(self, obj):
+    def get_updated_at(self, obj):
         """Method to display when comment was updated"""
-        return naturaltime(obj.updated_on)
+        return naturaltime(obj.updated_at)
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
 
-    
     class Meta:
         model = Comment
         fields = [
-            'id', 'owner', 'post', 'content','is_owner',
+            'id', 'owner', 'post', 'content', 'is_owner',
             'profile_id', 'profile_image', 'created_at', 'updated_at'
         ]
 
