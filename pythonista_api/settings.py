@@ -64,8 +64,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
-    'localhost',
-    'pythonista_api.herokuapp.com'
+    os.environ.get('ALLOWED_HOST'),,
+    'localhost'
     ]
 
 
