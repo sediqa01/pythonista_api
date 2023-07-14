@@ -62,9 +62,7 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = 'DEV' in os.environ
-
-DEBUG = True
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOSTS'),
@@ -72,7 +70,6 @@ ALLOWED_HOSTS = [
     '8000-sediqa01-pythonistaapi-x63am23a8mt.ws-eu101.gitpod.io',
     'pythonista-api-5cfcbbfd2406.herokuapp.com'
     ]
-
 
 
 # Application definition
