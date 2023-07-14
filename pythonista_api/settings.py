@@ -66,8 +66,10 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
-    'localhost'
+    'localhost',
+    '8000-sediqa01-pythonistaapi-x63am23a8mt.ws-eu101.gitpod.io'
     ]
+
 
 
 # Application definition
