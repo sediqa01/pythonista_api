@@ -60,6 +60,15 @@ Python - Provides the functionality for the DRF backend framework.
 
 15. **dj-rest-auth:** Provides REST API endpoints for login and logout.
 
+## Testing
+
+### _A. Unit Testing_
+
+All of the applications have undergone unit testing using the Red, Green, Refactor methodology; the code is contained in the test.py file located in each app directory. The outcome of all testing is as follows:
+
+![Unit Test](../pythonista_api/docs/images/test_success.jpg)
+
+
 
 ## Deployment
 
