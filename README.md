@@ -70,7 +70,7 @@ Python - Provides the functionality for the DRF backend framework.
 3. Add the dj-rest-auth urls paths to the main urls.py file.
 ```
 urlpatterns = [
-    path('', root_route),
+    
     ...
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     ]
@@ -138,11 +138,84 @@ class CurrentUserSerializer(UserDetailsSerializer):
 14. Overwrite the default user detail serializer in settings.py.
 ```
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'drf_api.serializers.CurrentUserSerializer'
+    'USER_DETAILS_SERIALIZER': 'pythonista_api.serializers.CurrentUserSerializer'
 }
 ```
 
 15. Migrate the database again with terminal command `python3 manage.py migrate`.
 16. Update requirements.txt file with new dependencies by running terminal command `pip3 freeze > requirements.txt`.
 
+----    
 
+### _B. Prepare API for deployment to Heroku_
+
+1. Create a views.py file in `pythonista_api` directory, it will create a welcome message view for API.
+```
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view()
+def root_route(request):
+    return Response({
+        "message": "Welcome to The Pythonista django-rest-freamwork API!"
+    })
+```
+
+2. Import to the main urls.py file, and add to the top of the urlpatterns list.
+
+```
+from .views import root_route
+
+urlpatterns = [
+    path('', root_route),
+
+    ...
+]
+```
+3. Add the following to settings.py (inside REST_FRAMEWORK), to set up page pagination.
+
+```
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        'rest_framework.authentication.SessionAuthentication'
+        if 'DEV' in os.environ
+        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )],
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+```
+
+4. Set the default renderer to JSON for the production environment in settings.py:
+
+```
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+```
+
+5. Add the following to settings.py (inside REST_FRAMEWORK, under DEFAULT_PAGINATION_CLASS), to set up DATETIME_FORMAT, :
+
+```
+'DATETIME_FORMAT': '%d %b %y',
+```
+
+6. Set DATETIME format to show how long ago a comment / conversation was created and updated. To do this, add the following code to any serializers.py files within comment apps:
+
+```
+from django.contrib.humanize.templatetags.humanize import naturaltime
+
+created_on = serializers.SerializerMethodField()
+updated_on = serializers.SerializerMethodField()
+
+    def get_created_on(self, obj):
+        """Method to display when comment/conversation was posted"""
+        return naturaltime(obj.created_at)
+
+    def get_updated_on(self, obj):
+        """Method to display when comment/conversation was updated"""
+        return naturaltime(obj.updated_at)
+
+```
