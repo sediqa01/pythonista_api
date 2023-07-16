@@ -220,6 +220,8 @@ updated_on = serializers.SerializerMethodField()
 
 ```
 
+---- 
+
 ### _C. Create a Database_
 
 These steps will create a PostgreSQL database:
@@ -234,7 +236,7 @@ These steps will create a PostgreSQL database:
 8. Return to the ElephantSQL **dashboard** and click on the database instance .name for this project
 9. In the URL section, click the copy icon to copy the database URL
 
-
+----  
 ### _D. Create a Heroku app_
 
 **Part A:**
@@ -244,9 +246,10 @@ These steps will create a PostgreSQL database:
 4. Add the `config vars`:
 5. Add a Config Var `DATABASE_URL`, and for the value, copy in your database URL from ElephantSQL (do not add quotation marks).
 
-### _E.  Project preparation_
+---- 
+### _E. Project Preparation_
 
-####8 Part 1
+#### Part 1
 
 Set up the project to connect to ElephantSQL database, create database tables by running `migrations`, and confirm that it all works by creating a superuser.
 
@@ -420,3 +423,68 @@ INSTALLED_APPS = [
     `pip freeze --local > requirements.txt`
 
 29. *Add*, *commit* and *push* code to GitHub.
+
+----  
+### _F. Heroku Deployment_
+ 
+ **Part B:**
+
+1. Back on the Heroku dashboard for new app, open the *Settings* tab.
+2. Add two more `Config Vars`:
+
+    *  SECRET_KEY
+    * CLOUDINARY_URL
+
+3. In the *Deployment* method section, select **Connect to GitHub**.
+4. Search for the repo and click **Connect**.
+5. As all changes pushed to GitHub, use the *Manual deploy* section and click **Deploy Branch**.
+
+--- 
+
+### _G. dj-rest-auth Bug Fix_
+
+The issue is that the samesite attribute we set to `‘None’` in settings.py `JWT_AUTH_SAMESITE = 'None'` is not passed to the logout view. This means that we can’t log out, but must wait for the refresh token to expire instead.
+
+1. In **pythonista_api/views.py**, import `JWT_AUTH` settings from settings.py.
+
+2. Add the following log out view code:
+```
+@api_view(['POST'])
+def logout_route(request):
+    """dj-rest-auth-logout-view-fix"""
+    response = Response()
+    response.set_cookie(
+        key=JWT_AUTH_COOKIE,
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=JWT_AUTH_SAMESITE,
+        secure=JWT_AUTH_SECURE,
+    )
+    response.set_cookie(
+        key=JWT_AUTH_REFRESH_COOKIE,
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=JWT_AUTH_SAMESITE,
+        secure=JWT_AUTH_SECURE,
+    )
+    return response
+
+```
+ 
+3. In the main urls.py file, import the logout_route:
+```
+from .views import root_route, logout_route
+
+urlpatterns = [
+    path('dj-rest-auth/logout/', logout_route),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+]
+```
+4. Add, commit and push changes. Return to Heroku and manually deploy again.
+
+
+### _H. dj-rest-auth Bug Fix_
