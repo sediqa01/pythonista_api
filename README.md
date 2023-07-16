@@ -487,4 +487,40 @@ urlpatterns = [
 4. Add, commit and push changes. Return to Heroku and manually deploy again.
 
 
-### _H. dj-rest-auth Bug Fix_
+### _H. Adding extra required environment variables_
+
+1. In settings.py, add heroku app url to ALLOWED_HOSTS:
+```
+ALLOWED_HOSTS = [
+    '... .herokuapp.com',
+    'localhost',
+]
+```
+
+2. Go to Heroku deployed app, and go to *Settings* then `'Reveal config vars'.`
+
+3. Add the new ALLOWED_HOST key with the value of deployed URL (as added to ALLOWED_HOSTS).
+
+4. Go back to settings.py and replace the url string with the `ALLOWED_HOST` environment variable"
+
+```
+ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+    'localhost',
+]
+```
+5. In order to make application more secure by changing the workspace url regularly, import the regular expression module at the top of settings.py"
+```
+import re
+```
+6. Replace the if/else statement for CLIENT_ORIGIN with the following:
+```
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+```
+7. Add, commit and push changes. Return to Heroku and manually deploy branch for a final time.
+
