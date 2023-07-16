@@ -233,3 +233,13 @@ These steps will create a PostgreSQL database:
 7. Check your details are correct and then click `"Create instance"`.
 8. Return to the ElephantSQL **dashboard** and click on the database instance .name for this project
 9. In the URL section, click the copy icon to copy the database URL
+
+
+### _D. Create a Heroku app_
+
+**Part A:**
+1. Click `"New"` and select `"Create new app"`.
+2. Input a meaningful name for your app and choose the region best suited to your location.
+3. Select `"Settings"` from the tabs.
+4. Add the `config vars`:
+5. Add a Config Var `DATABASE_URL`, and for the value, copy in your database URL from ElephantSQL (do not add quotation marks)
