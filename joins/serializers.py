@@ -23,5 +23,4 @@ class JoinSerializer(serializers.ModelSerializer):
             return super().create(validated_data)
         except IntegrityError:
             raise serializers.ValidationError({
-                'detail': 'You are already Joined!'
-        })
+                'detail': 'You are already Joined!'})

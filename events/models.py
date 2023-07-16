@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import date
 from django.utils import timezone
 
 
@@ -21,7 +20,6 @@ class Event(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default-event_lu9ey8', blank=True
     )
-
 
     class Meta:
         ordering = ['-created_at']
