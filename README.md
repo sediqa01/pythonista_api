@@ -219,3 +219,17 @@ updated_on = serializers.SerializerMethodField()
         return naturaltime(obj.updated_at)
 
 ```
+
+### _C. Create a Database_
+
+These steps will create a PostgreSQL database:
+
+1. Log in to ElephantSQL.com to access your dashboard.
+2. Click `"Create New Instance"`.
+3. Set up your plan.
+4. Select `"Select Region"`.
+5. Select a data center near you.
+6. Then click `"Review"`.
+7. Check your details are correct and then click `"Create instance"`.
+8. Return to the ElephantSQL **dashboard** and click on the database instance .name for this project
+9. In the URL section, click the copy icon to copy the database URL
