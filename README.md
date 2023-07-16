@@ -68,9 +68,13 @@ All of the applications have undergone unit testing using the Red, Green, Refact
 
 ![Unit Test](../pythonista_api/docs/images/test_success.jpg)
 
+### _B. Python Testing_
 
+[CI Python Linter](https://pep8ci.herokuapp.com/) was used to validate the Python code in this project. All code passed without errors, except settings.py and env.py which showed `E501 'line too long'` warnings.
 
+![Settings.py](../pythonista_api/docs/images/sitting.jpg)
 
+![env.py](../pythonista_api/docs/images/env.jpg)
 
 ## Deployment
 
