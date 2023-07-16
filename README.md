@@ -21,7 +21,7 @@ The following Entity Relationship Diagram was created to show the models used. T
 
 The relationships between all of these models is summarized in the followed entity relationship diagram:
 
-![Database Schema](../pythonista_api/docs/images/DB%20schema.jpg)
+![Database Schema](../pythonista_api/docs/images/db_schema.jpg)
 
 
 ## Technologies Used
@@ -486,6 +486,7 @@ urlpatterns = [
 ```
 4. Add, commit and push changes. Return to Heroku and manually deploy again.
 
+___
 
 ### _H. Adding extra required environment variables_
 
