@@ -242,4 +242,181 @@ These steps will create a PostgreSQL database:
 2. Input a meaningful name for your app and choose the region best suited to your location.
 3. Select `"Settings"` from the tabs.
 4. Add the `config vars`:
-5. Add a Config Var `DATABASE_URL`, and for the value, copy in your database URL from ElephantSQL (do not add quotation marks)
+5. Add a Config Var `DATABASE_URL`, and for the value, copy in your database URL from ElephantSQL (do not add quotation marks).
+
+### _E.  Project preparation_
+
+####8 Part 1
+
+Set up the project to connect to ElephantSQL database, create database tables by running `migrations`, and confirm that it all works by creating a superuser.
+
+1. In the terminal, install `dj_database_url` and `psycopg2`, both of these are needed to connect to external database.
+```
+ pip3 install dj_database_url==0.5.0 psycopg2
+```
+
+2. In settings.py file, import `dj_database_url` underneath the import for `os`.
+```
+ import os
+ import dj_database_url
+```
+
+3. Update the DATABASES section to the following:
+
+```
+ if 'DEV' in os.environ:
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.sqlite3',
+             'NAME': BASE_DIR / 'db.sqlite3',
+         }
+     }
+ else:
+     DATABASES = {
+         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+     }
+```
+
+4. In your env.py file, add a new environment variable with the key set to `DATABASE_URL`, and the value to your ElephantSQL database URL.
+
+ ```
+ os.environ['DATABASE_URL'] = "<PostgreSQL URL here>"
+ ```
+
+ 5. Temporarily comment out the DEV environment variable so that IDE can connect to your external database.
+
+ ```
+ import os
+
+ os.environ['CLOUDINARY_URL'] = "cloudinary://..."
+ os.environ['SECRET_KEY'] = "Z7o..."
+ # os.environ['DEV'] = '1'
+ os.environ['DATABASE_URL'] = "postgres://..."
+ ```
+
+ 6. Back in your settings.py file, add a print statement to confirm you have connected to the external database.
+
+ ```
+  Print("Connected")
+  ```
+
+7. n the terminal,` -–dry-run your makemigrations` to confirm the project  has connected to the external database.
+
+```
+python3 manage.py makemigrations --dry-run
+```
+
+8. Migrate your database models to your new database.
+9. Create a superuser for new database, follow the steps to create the superuser username and password.
+```
+python3 manage.py createsuperuser
+```
+
+10. The ElephantSQL page for your database, in the left side navigation, select `“BROWSER”`.
+11. Click the Table queries button, select `auth_user`.
+12. When you click “Execute”, you should see the newly created superuser details displayed. This confirms the tables have been created and can add data to database.
+13. Add changed to Github.
+
+### Part 2
+
+14. In the terminal of your IDE workspace, install `gunicorn`.
+```
+ pip3 install gunicorn django-cors-headers
+```
+
+15. Update requirements.txt -> `pip3 freeze --local > requirements.txt`
+16. Heroku also requires a `Procfile`. Create this file.
+17. Inside the `Procfile`, add these two commands:
+
+```
+ release: python manage.py makemigrations && python manage.py migrate
+ web: gunicorn pythonista_api.wsgi
+```
+
+18. In settings.py file, update the value of the `ALLOWED_HOSTS` variable to include your Heroku app’s URL.
+```
+ ALLOWED_HOSTS = ['localhost', '<app_name_here>.herokuapp.com']
+```
+
+19. Add corsheaders to `INSTALLED_APPS`.
+
+```
+INSTALLED_APPS = [
+    ...
+    'dj_rest_auth.registration',
+    'corsheaders',
+    ...
+ ]
+ ```
+20. Add c`orsheaders` middleware to the TOP of the `MIDDLEWARE`
+
+ ```
+ SITE_ID = 1
+ MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
+     ...
+ ]
+ ```
+21. Under the MIDDLEWARE list, set the `ALLOWED_ORIGINS` for the network requests made to the server with the following code:
+
+ ```
+ if 'CLIENT_ORIGIN' in os.environ:
+     CORS_ALLOWED_ORIGINS = [
+         os.environ.get('CLIENT_ORIGIN')
+     ]
+ else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+```
+
+22. Enable sending cookies in cross-origin requests so that users can get authentication functionality.
+
+ ```
+ else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+
+ CORS_ALLOW_CREDENTIALS = True
+ ```
+
+23. To be able to have the front end app and the API deployed to different platforms, set the JWT_AUTH_SAMESITE attribute to 'None'. Without this the cookies would be blocked
+
+```
+ JWT_AUTH_COOKIE = 'my-app-auth'
+ JWT_AUTH_REFRESH_COOKE = 'my-refresh-token'
+ JWT_AUTH_SAMESITE = 'None'
+ ```
+24. Remove the value for SECRET_KEY and replace with the following code to use an environment variable instead
+
+ ```
+ SECRET_KEY = os.getenv('SECRET_KEY')
+ ```
+    
+25. Set a NEW value for your SECRET_KEY environment variable in env.py, do NOT use the same one that has been published to GitHub in your commits
+
+ ```
+ os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
+ ```
+
+26. Set the DEBUG value to be True only if the DEV environment variable exists. This will mean it is True in development, and False in production
+
+ ```
+ DEBUG = 'DEV' in os.environ
+ ```
+27. Comment DEV back in env.py
+
+ ```
+ import os
+
+ os.environ['CLOUDINARY_URL'] = "cloudinary://..."
+ os.environ['SECRET_KEY'] = "Z7o..."
+ os.environ['DEV'] = '1'
+ os.environ['DATABASE_URL'] = "postgres://..."
+ ```
+28. Ensure the project requirements.txt file is up to date. In the IDE terminal of your DRF API project enter the following
+
+    `pip freeze --local > requirements.txt`
+
+29. *Add*, *commit* and *push* code to GitHub.
