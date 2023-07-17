@@ -39,18 +39,16 @@ Python - Provides the functionality for the DRF backend framework.
 3. **PostgreSQL:** PostgreSQL was used as the object-relational database system.
 
 4. **ElephantSQL:** ElephantSQL was used to host the database.
-
 5. **Cloudinary:** A service that hosts image files in the project.
 
 6. **Git:** Git was used for version control by utilizing the Gitpod terminal to commit to Git and Push to GitHub.
 
 7. **GitHub:** GitHub is used to store the projects code after being pushed from Git.
 
-8. **PEP8 Validation:** pep8 is a tool to check your Python code against some of the style conventions in PEP 8.
-
+8. **CI Python Linter:** was used to validate the Python code in this project
 9. **Heroku:** Heroku was used for the deployed application.
 
-10.  **DrawSQLapp:** Development of database schema.
+10. **DrawSQLapp:** Development of database schema.
 11. **Django CORS:** This Django app adds Cross-Origin-Resource Sharing (CORS) headers to responses, to enable the API to respond to requests from origins other than its own host.
 
 12. **Django Filter:** The django-filter is used to implement ISO datetime filtering functionality.
@@ -75,6 +73,69 @@ All of the applications have undergone unit testing using the Red, Green, Refact
 ![Settings.py](../pythonista_api/docs/images/sitting.jpg)
 
 ![env.py](../pythonista_api/docs/images/env.jpg)
+
+### _C. Manual Testing_
+
+Throughout the development process, manual testing was done to make sure the database was being updated as intended whether adding, reading, updating, or removing data as needed. All apps function properly.
+
+
+**Prfiles App**
+
+* List View (Read if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Update if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Followers App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Posts App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Update, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Likes App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Comments App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Update, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Events App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Update, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Conversations App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
+**Joins App**
+* List View (Read, Create if logged in)
+* List View (Read if not logged in)
+* Detail View (Read, Update, Delete if owner)
+* Detail View (Read if not owner)
+* Detail View (Read if not logged in)
+
 
 ## Deployment
 
