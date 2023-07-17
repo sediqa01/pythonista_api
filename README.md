@@ -25,7 +25,6 @@ The relationships between all of these models is summarized in the followed enti
 
 
 ## Technologies Used
-
 **_Languages_**
 
 Python - Provides the functionality for the DRF backend framework.
@@ -58,8 +57,8 @@ Python - Provides the functionality for the DRF backend framework.
 
 15. **dj-rest-auth:** Provides REST API endpoints for login and logout.
 
-## Testing
 
+## Testing
 ### _A. Unit Testing_
 
 All of the applications have undergone unit testing using the Red, Green, Refactor methodology; the code is contained in the test.py file located in each app directory. The outcome of all testing is as follows:
@@ -74,10 +73,10 @@ All of the applications have undergone unit testing using the Red, Green, Refact
 
 ![env.py](../pythonista_api/docs/images/env.jpg)
 
+
 ### _C. Manual Testing_
 
-Throughout the development process, manual testing was done to make sure the database was being updated as intended whether adding, reading, updating, or removing data as needed. All apps function properly.
-
+Throughout the development process, manual testing got CRUD testing was done to make sure the database was being updated as intended whether adding, reading, updating, or removing data as needed. All apps function properly.
 
 **Prfiles App**
 
@@ -137,8 +136,34 @@ Throughout the development process, manual testing was done to make sure the dat
 * Detail View (Read if not logged in)
 
 
-## Deployment
+## Bugs
+### _A. Solved Bugs_
 
+ 1. While creating the **Event Model** I set the `DateTimeField` for `starts_at` and `ends_at` as `created_at` field. which was wrong for time setting in Event form.
+ 
+ ![Time Field bug code](../pythonista_api/docs/images/event_bug_time.jpg)
+
+ I changed the `DateTimeField` field to `TimeField`.
+
+ ![Solved bug Code ](../pythonista_api/docs/images/bug_code1.jpg)
+
+ ![Solved bug Result ](../pythonista_api/docs/images/solved_event_time.jpg)
+
+
+ 2. When writing the test case for the **Events** app, I got a console error about not adding `event_date` on creating the event in the test case because the `event_date` has a required constraint:
+ ![Event test case Error](../pythonista_api/docs/images/event_test_error.jpg)
+
+ So, I added the `event_date` field, and the error is gone.
+ ![Solved Event bug](../pythonista_api/docs/images/sovled_test_bug.jpg)
+
+
+ 3. During deployment on Heroku, I got issue. Every time I ran my deployed site, I received a (400) Bad Request error, which was caused by
+ `ALLOWED_HOSTS ` both config_var and `ALLOWED_HOSTS` in sttings.py file.
+ which the link to `ALLOWED_HOSTS` was borken.
+ I just fix the links and redeployed again.
+
+
+## Deployment
 ### _A. Set up JSON Web Tokens_
 
 1. Install JSON Web Token authentication run terminal command `pip install dj-rest-auth`
