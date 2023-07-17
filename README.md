@@ -634,7 +634,7 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
 * The Code Institute DRF-API walkthrough was used as an invaluable guide on how to build a DRF-API.
 * The default profile pic image was taken from [VectorStock](https://www.vectorstock.com/royalty-free-vectors/default-profile-vectors)
 * I watched a tutorial on YouTube about how to implement the relationship between tables. [Database Star channel](https://www.youtube.com/watch?v=-C2olg3SfvU&list=PLZDOU071E4v6epq3GS0IqZicZc3xwwBN_)
-* Out ***Tutor Support*** team, Ed, Jason, Alan and Oisin, they were always there for me. Not just pp5 but all the time, when I got issue they helped me and motivate me with their all the time support. I really appreciate them.
+* Out ***Tutor Support*** team, Ed, Jason, Alan and Oisin, they were always there for me. Not just pp5 but every time I had a problem, they assisted me and inspired me with their constant assistance. They are very much appreciated.
 * Stack Overflow: Beside our tutor support team, another helper for me have been stack overflow.
 * MDN Web Docs
 * Django Rest Framework Documentation
