@@ -162,6 +162,9 @@ Throughout the development process, manual testing got CRUD testing was done to 
  which the link to `ALLOWED_HOSTS` was borken.
  I just fix the links and redeployed again.
 
+### _B. Unfixed Bugs_
+So far none
+
 
 ## Deployment
 ### _A. Set up JSON Web Tokens_
@@ -626,3 +629,12 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
 ```
 7. Add, commit and push changes. Return to Heroku and manually deploy branch for a final time.
 
+## Credits
+
+* The Code Institute DRF-API walkthrough was used as an invaluable guide on how to build a DRF-API.
+* The default profile pic image was taken from [VectorStock](https://www.vectorstock.com/royalty-free-vectors/default-profile-vectors)
+* I watched a tutorial on YouTube about how to implement the relationship between tables. [Database Star channel](https://www.youtube.com/watch?v=-C2olg3SfvU&list=PLZDOU071E4v6epq3GS0IqZicZc3xwwBN_)
+* Out ***Tutor Support*** team, Ed, Jason, Alan and Oisin, they were always there for me. Not just pp5 but all the time, when I got issue they helped me and motivate me with their all the time support. I really appreciate them.
+* Stack Overflow: Beside our tutor support team, another helper for me have been stack overflow.
+* MDN Web Docs
+* Django Rest Framework Documentation
