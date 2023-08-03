@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import date
 
 
 class Event(models.Model):
@@ -12,7 +13,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     location = models.TextField(blank=True)
-    event_date = models.DateField(blank=False)
+    event_date = models.DateField(default=date.today)
     organizer = models.CharField(max_length=255, blank=True)
     starts_at = models.TimeField(default=timezone.now)
     ends_at = models.TimeField(default=timezone.now)
