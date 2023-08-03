@@ -29,13 +29,13 @@ class EventSerializer(serializers.ModelSerializer):
             return join.id if join else None
         return None
 
-    
     class Meta:
         model = Event
         fields = [
             'id', 'owner', 'title', 'description', 'location',
-            'starts_at', 'ends_at','created_at',
+            'starts_at', 'ends_at', 'created_at',
             'updated_at', 'image', 'event_date',
-            'is_owner', 'profile_id','profile_image',
-            'join_id', 'conversations_count', 'joins_count'
+            'is_owner', 'profile_id', 'profile_image',
+            'join_id', 'conversations_count', 'joins_count',
+            'organizer',
         ]

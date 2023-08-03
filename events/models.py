@@ -13,6 +13,7 @@ class Event(models.Model):
     description = models.TextField(blank=True)
     location = models.TextField(blank=True)
     event_date = models.DateField(blank=False)
+    organizer = models.CharField(max_length=255, blank=True)
     starts_at = models.TimeField(default=timezone.now)
     ends_at = models.TimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
