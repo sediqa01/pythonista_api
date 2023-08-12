@@ -17,8 +17,10 @@ import { axiosReq } from "../../api/axiosDefaults";
 // component
 import { useRedirect } from "../../hooks/useRedirect";
 
+
 function EventEditForm() {
-    useRedirect("loggedOut");
+  useRedirect("loggedOut");
+  
   const [errors, setErrors] = useState({});
   const imageInput = useRef(null);
   const history = useHistory();

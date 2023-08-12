@@ -16,6 +16,7 @@ import dj_database_url
 if os.path.exists('env.py'):
     import env
 
+
 CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
@@ -38,10 +39,9 @@ REST_FRAMEWORK = {
     'TIME_FORMAT': '%H:%M',
 }
 
-if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
+REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+    'rest_framework.renderers.JSONRenderer',
+]
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
@@ -66,8 +66,6 @@ DEBUG = 'DEBUG' in os.environ
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
-    '8000-sediqa01-pythonistaapi-x63am23a8mt.ws-eu103.gitpod.io',
-    'pythonista-api-5cfcbbfd2406.herokuapp.com'
     ]
 
 
@@ -101,6 +99,7 @@ INSTALLED_APPS = [
     'posts',
     'profiles',
 ]
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -117,7 +116,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
-    ]
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -192,7 +191,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 WHITENOISE_ROOT = BASE_DIR / 'staticfiles' / 'build'
 
