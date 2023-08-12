@@ -66,7 +66,7 @@ DEBUG = 'DEBUG' in os.environ
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
-    # '8000-sediqa01-pythonistaapi-x63am23a8mt.ws-eu103.gitpod.io',
+    '8000-sediqa01-pythonistaapi-x63am23a8mt.ws-eu103.gitpod.io',
     # 'pythonista-api-5cfcbbfd2406.herokuapp.com'
     ]
 
