@@ -1,5 +1,5 @@
 from pythonista_api.permissions import IsOwnerOrReadOnly
-from rest_framework import generics, permissions, filters
+from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import ProfileSerializer
 from django.db.models import Count

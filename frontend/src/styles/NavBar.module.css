@@ -17,10 +17,13 @@
     transition: color ease-in-out 0.3s;
     color: #54d9ff;
 }
+
 .NavBar a {
+    color: #fff;
     text-decoration: none;
     font-size: 1.4rem;
 }
+
 .NavBar a:hover {
     text-decoration: none;
     color: #fff;
@@ -37,6 +40,7 @@
     color:#fff;
     vertical-align: middle;
 }
+
 .NavBrand i {
     font-size: 1.5rem;
 }

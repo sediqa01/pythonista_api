@@ -13,10 +13,10 @@
 }
 
 a {
+  text-decoration: none;
   color: #fff;
 }
 
-a,
 a:hover {
   text-decoration: none;
 }
@@ -77,6 +77,7 @@ i:hover {
   font-size: 1.2rem;
   font-weight: 500;
 }
+
 figure {
   text-align: center;
   display: inline-block;
