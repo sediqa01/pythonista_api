@@ -1,6 +1,6 @@
 # Pythonista DRF API
 
-The Pythonista DRF API is a back-end API created using Django Rest Framework that is create to serve the Pythonista React app. It handles all backend functionality including user Profiles, Posts, Comments, Likes, Events, Conversation on an event's post, Join, Following and Followers feature.
+The Pythonista DRF API is a back-end API created using Django Rest Framework to serve the Pythonista React app. It handles all backend functionality including user Profiles, Posts, Comments, Likes, Events, Conversation on an event's post, Join, Following and Followers feature.
 
 ## Database Designs
 The following Entity Relationship Diagram was created to show the models used. The in-built Django User model was used for this project, and the following custom models were created:
@@ -21,7 +21,7 @@ The following Entity Relationship Diagram was created to show the models used. T
 
 The relationships between all of these models is summarized in the followed entity relationship diagram:
 
-![Database Schema](../pythonista_api/docs/images/db_schema.jpg)
+![Database Schema](docs/images/db_schema.jpg)
 
 
 ## Technologies Used
@@ -63,15 +63,15 @@ Python - Provides the functionality for the DRF backend framework.
 
 All of the applications have undergone unit testing using the Red, Green, Refactor methodology; the code is contained in the test.py file located in each app directory. The outcome of all testing is as follows:
 
-![Unit Test](../pythonista_api/docs/images/test_success.jpg)
+![Unit Test](docs/images/test_success.jpg)
 
 ### _B. Python Testing_
 
 [CI Python Linter](https://pep8ci.herokuapp.com/) was used to validate the Python code in this project. All code passed without errors, except settings.py and env.py which showed `E501 'line too long'` warnings.
 
-![Settings.py](../pythonista_api/docs/images/sitting.jpg)
+![Settings.py](docs/images/sitting.jpg)
 
-![env.py](../pythonista_api/docs/images/env.jpg)
+![env.py](docs/images/env.jpg)
 
 
 ### _C. Manual Testing_
@@ -141,26 +141,27 @@ Throughout the development process, manual testing got CRUD testing was done to 
 
  1. While creating the **Event Model** I set the `DateTimeField` for `starts_at` and `ends_at` as `created_at` field. which was wrong for time setting in Event form.
  
- ![Time Field bug code](../pythonista_api/docs/images/event_bug_time.jpg)
+ ![Time Field bug code](docs/images/event_bug_time.jpg)
 
  I changed the `DateTimeField` field to `TimeField`.
 
- ![Solved bug Code ](../pythonista_api/docs/images/bug_code1.jpg)
+ ![Solved bug Code ](docs/images/bug_code1.jpg)
 
- ![Solved bug Result ](../pythonista_api/docs/images/solved_event_time.jpg)
+ ![Solved bug Result ](docs/images/solved_event_time.jpg)
 
 
  2. When writing the test case for the **Events** app, I got a console error about not adding `event_date` on creating the event in the test case because the `event_date` has a required constraint:
- ![Event test case Error](../pythonista_api/docs/images/event_test_error.jpg)
+ ![Event test case Error](docs/images/event_test_error.jpg)
 
  So, I added the `event_date` field, and the error is gone.
- ![Solved Event bug](../pythonista_api/docs/images/sovled_test_bug.jpg)
+ ![Solved Event bug](docs/images/sovled_test_bug.jpg)
 
 
  3. During deployment on Heroku, I got issue. Every time I ran my deployed site, I received a (400) Bad Request error, which was caused by
  `ALLOWED_HOSTS ` both config_var and `ALLOWED_HOSTS` in sttings.py file.
  which the link to `ALLOWED_HOSTS` was borken.
  I just fix the links and redeployed again.
+
 
 ### _B. Unfixed Bugs_
 So far none
